@@ -123,11 +123,11 @@ app.MapGet("/", static async (string question) =>
         {
             role = "user",
             content = $"Here are the results of your query: {queryJson} \n" +
-                    "If the results are empty, offer polite apologies and explain why the question may not have been answered. \n" +
                     "Summarize the results in a few sentences. Using your knowledge of Phildelphia, \n" +
                     "what inferences can you make from these results? \n" +
                     "What might be interesting about these results? \n" +
-                    "return your response as a JSON string[] with each element being a sentence"
+                    "return your response as a JSON string[] with each element being a sentence" +
+                    "If the results are empty, offer polite apologies and explain why the question may not have been answered. \n"
         });
 
         var resultsResponse = await bedrock.Converse(messages);

@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Input from './components/input.vue';
+import Overlay from './components/overlay.vue';
+import AnswerCard from './components/answercard.vue';
 
 const question = ref('');
-const answer = ref('');
+const answer = ref([]);
 const isLoading = ref(false);
 
 const handleInput = (value: string) => {
   question.value = value;
 }
 
+//ToDo: Genericize this
 const handleSubmit = async () => {
   if (!question.value.trim()) return; // Prevent empty submissions
   isLoading.value = true;
@@ -34,11 +37,7 @@ const handleSubmit = async () => {
 <template>
   <div class="container" @keydown.enter="handleSubmit">
     <!-- Loading Overlay -->
-    <div class="loading-overlay" v-if="isLoading">
-      <div class="spinner-container">
-        <img src="/favicon.png" alt="Loading..." class="spinning-logo" />
-      </div>
-    </div>
+    <Overlay :isLoading="isLoading" />
 
     <h1 class="title">Open Data Philly Queries</h1>
     <h3 class="subtitle">Ask a question about the City of Philadelphia's 311 data</h3>
@@ -60,12 +59,8 @@ const handleSubmit = async () => {
       </button>
     </div>
     
-    <!-- Display the answer -->
-    <div class="card" v-if="answer">
-      <div v-for="(item, index) in answer" :key="index" class="answer-item">
-        {{ item }}
-      </div>
-    </div>
+    <!-- Display the answer card -->
+    <AnswerCard :answer="answer" />
   </div>
 </template>
 
@@ -124,63 +119,6 @@ const handleSubmit = async () => {
   cursor: not-allowed;
 }
 
-.card {
-  background: #1a1818;
-  border-radius: 10px;
-  border: 1px solid #333;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  color: #fff;
-  justify-content: left;
-}
-
-.answer-item {
-  display: list-item;
-  list-style-type: circle;
-  list-style-position: outside;
-  text-align: left;
-  overflow-wrap: break-word;
-  margin-left: 1rem;
-  margin-bottom: 0.5rem;
-}
 
 
-/* Loading Overlay Styles */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-
-.spinner-container {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.spinning-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 </style>
