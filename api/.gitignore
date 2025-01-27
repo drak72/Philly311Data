@@ -1,0 +1,4 @@
+*.duckdb
+.env
+bin/Debug
+obj/Debug
