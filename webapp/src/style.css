@@ -58,16 +58,3 @@ button:focus-visible {
   padding: 2rem;
   text-align: center;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: hwb(226 73% 19%);
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}

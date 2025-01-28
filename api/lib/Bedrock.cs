@@ -7,28 +7,8 @@ using Amazon;
 using Amazon.BedrockRuntime;
 using Amazon.BedrockRuntime.Model;
 
-namespace Bedrock
+namespace opendata.lib
 {
-    /** Type Definitions */
-    public class Schema
-    {
-        [JsonPropertyName("columns")]
-        public List<Column> Columns { get; set; } = new();
-    }
-
-    public class Column
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; set; } = "";
-
-        [JsonPropertyName("type")]
-        public string Type { get; set; } = "";
-
-        [JsonPropertyName("description")]
-        public string Description { get; set; } = "";
-    }
-
-
     public class InvokeMessage
     {
         [JsonPropertyName("role")]
@@ -39,7 +19,7 @@ namespace Bedrock
     }
 
     /** Bedrock Class */
-    public class Bedrock
+    public class Agent
     {
 
         public async Task<string> Converse(List<InvokeMessage> messages)
@@ -59,7 +39,7 @@ namespace Bedrock
                     ModelId = modelId,
                     Body = new MemoryStream(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new {
                         anthropic_version = "bedrock-2023-05-31",
-                        max_tokens = 1024,
+                        max_tokens = 4096,
                         messages
                     })))
                 };
