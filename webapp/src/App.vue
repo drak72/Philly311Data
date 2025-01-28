@@ -5,7 +5,8 @@ import Overlay from './components/overlay.vue';
 import AnswerCard from './components/answercard.vue';
 
 const question = ref('');
-const answer = ref([]);
+let answer = ref([] as string[]);
+
 const isLoading = ref(false);
 
 const handleInput = (value: string) => {
@@ -28,6 +29,7 @@ const handleSubmit = async () => {
     answer.value = await response.json();
   } catch (error) {
     console.error('Error:', error);
+    answer.value = ["Sorry, we've hit an error!", JSON.stringify(error)];
   } finally {
     isLoading.value = false;
   }
